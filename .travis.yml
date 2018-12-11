@@ -14,32 +14,67 @@ node_js:
   - "6"
   - "8"
   - "10"
+before_install:
+  - openssl aes-256-cbc -K $encrypted_e06e812a488c_key -iv $encrypted_e06e812a488c_iv -in GCS\ keyfile.json.enc -out GCS\ keyfile.json -d
 install:
   - npm install
 script:
   - npm run test
   - npm run coverage
-# - >- if [[ "$TRAVIS_TEST_RESULT" == 0 ]]; 
-#      then
-#      npm install '@google-cloud/storage'
-#      cp coverage/lcov.info coverageResults/lcov.$TRAVIS_JOB_NUMBER.info;
-#      
-#      fi # If the tests are successful store the results
-# jobs:
-#   include:
-#     - stage: upload test results
-#      before_install:
-#        - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-#        - chmod +x ./cc-test-reporter
-#      node_js: 10
-#      script:
-#        - >- for fn in 'ls coverageResults | grep 'lcov.$TRAVIS_BUILD_NUMBER.*.info';
-#              do
-#              echo "$fn"; 
-#              ./cc-test-reporter format-coverage -t lcov -o codeclimate.$fn.json $fn; 
-#              done
-#              # for each codecoverage report, format it
-#        - ./cc-test-reporter sum-coverage codeclimate.*.json         # Sum all coverage parts into coverage/codeclimate.json
-#        - ./cc-test-reporter upload-coverage                         # Upload coverage/codeclimate.json
+  - >- 
+      "if [[ \"$TRAVIS_TEST_RESULT\" == 0 ]]; 
+      then
+      npm install \"@google-cloud/storage\"
+      node -e \"
+      var config = { projectId: 'deft-condition-224715', keyFilename: 'keyfile.json' };
+      var storageModule = require('@google-cloud/storage');
+      var storage = new storageModule.Storage(config);
+      storage.bucket('node-doxygen_coverage_reports').upload('testscript.js',
+      { destination: '$TRAVIS_BUILD_NUMBER\\lcov.$TRAVIS_JOB_NUMBER.info' gzip: true }).then( 
+      function(){console.log('File Uploaded')},
+      function (error) {console.log ('Upload failed: ' + error)});\"
+      fi" # If the tests are successful store the results
+jobs:
+   include:
+     - stage: upload test results
+      before_install:
+        - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+        - chmod +x ./cc-test-reporter
+      node_js: 10
+      script:
+        - >-
+          "npm install \"@google-cloud/storage\"
+          node -e \"
+          var config = { projectId: 'deft-condition-224715', keyFilename: 'keyfile.json' };
+          var storageModule = require('@google-cloud/storage');
+          var storage = new storageModule.Storage(config);
+          var prefix = '$TRAVIS_BUILD_NUMBER\\';
+          var bucketName = 'node-doxygen_coverage_reports';
+          var options = {prefix: prefix, delimiter: '\\'}
+          storage.bucket(bucketName).getFiles(options).then(
+              function(files){
+                  files.forEach(file => {
+                      var fileName = file.name.substring(prefix.length);
+                      var options = {destination: fileName};
+                      await storage.bucket(bucketName).file(file.name).download(options)
+                  });
+              },
+              function (error) {
+                  console.log ('Upload failed: ' + error);
+              }
+          );
+          \""
+        >- 
+          for fn in 'ls coverageResults | grep 'lcov.$TRAVIS_BUILD_NUMBER.*.info';
+              do
+              echo "$fn"; 
+              ./cc-test-reporter format-coverage -t lcov -o codeclimate.$fn.json $fn; 
+          done # for each codecoverage report, format it
+        - ./cc-test-reporter sum-coverage codeclimate.*.json         # Sum all coverage parts into coverage/codeclimate.json
+        - ./cc-test-reporter upload-coverage                         # Upload coverage/codeclimate.json
+
+  // Lists files in the bucket, filtered by a prefix
+  const [files] = await storage.bucket(bucketName).getFiles(options);
+
 git:
   depth: 10

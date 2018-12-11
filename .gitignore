@@ -8,3 +8,4 @@ coverage
 *.log
 /config
 package-lock.json
+GCS keyfile.json
