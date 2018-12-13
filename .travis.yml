@@ -12,7 +12,7 @@ cache:
 node_js:
 #  - "4"
 #  - "6"
-#  - "8"
+  - "8"
   - "10"
 before_install:
   -  openssl aes-256-cbc -K $encrypted_13687a44e26f_key -iv $encrypted_13687a44e26f_iv -in GCS\ keyfile.json.enc -out GCS\ keyfile.json -d
@@ -25,9 +25,9 @@ script:
       eval
       "if [[ \"$TRAVIS_TEST_RESULT\" == 0 ]]; 
       then
-      echo \"test\"
-      npm install \"@google-cloud/storage\"
-      echo \"test2\"
+      echo \"test\" \n
+      npm install \"@google-cloud/storage\" \n
+      echo \"test2\"  \n
       node -e \"
       console.log(\"test3\");
       var config = { projectId: 'deft-condition-224715', keyFilename: 'GCS keyfile.json' };
@@ -50,7 +50,7 @@ jobs:
       script:
         - >-
           eval
-          "npm install \"@google-cloud/storage\"
+          "npm install \"@google-cloud/storage\" \n
           node -e \"
           var config = { projectId: 'deft-condition-224715', keyFilename: 'GCS keyfile.json' };
           var storageModule = require('@google-cloud/storage');
