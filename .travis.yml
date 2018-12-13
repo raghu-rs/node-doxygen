@@ -21,9 +21,8 @@ install:
 script:
   - npm run test
   - npm run coverage
-  - echo "findMe"
   - >-  
-      eval # If the tests are successful store the results
+      eval
       "if [[ \"$TRAVIS_TEST_RESULT\" == 0 ]]; then
       npm install @google-cloud/storage;
       node -e \"
@@ -47,7 +46,7 @@ jobs:
         - chmod +x ./cc-test-reporter
       node_js: 10
       script:
-        - npm install \"@google-cloud/storage\" \n
+        - npm install @google-cloud/storage
         - >-
           eval
           "node -e \"
@@ -56,7 +55,7 @@ jobs:
           var storage = new storageModule.Storage(config);
           var prefix = '$TRAVIS_BUILD_NUMBER\\';
           var bucketName = 'node-doxygen_coverage_reports';
-          var options = {prefix: prefix, delimiter: '\\'}
+          var options = {prefix: prefix, delimiter: '\\'};
           storage.bucket(bucketName).getFiles(options).then(
               function(files){
                   files.forEach(file => {
