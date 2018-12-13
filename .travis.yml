@@ -21,6 +21,7 @@ install:
 script:
   - npm run test
   - npm run coverage
+  - echo "findMe"
   - >- 
       eval
       "if [[ \"$TRAVIS_TEST_RESULT\" == 0 ]]; then # If the tests are successful store the results
@@ -40,7 +41,7 @@ script:
       storage.bucket('node-doxygen_coverage_reports').upload('coverage\\lcov.info',
       { destination: '$TRAVIS_BUILD_NUMBER\\lcov.$TRAVIS_JOB_NUMBER.info' gzip: true }).then( 
       function(){console.log('File Uploaded')},
-      function (error) {console.log ('Upload failed: ' + error)});\";"
+      function (error) {console.log ('Upload failed: ' + error)});\""
     
 jobs:
    include:
