@@ -26,7 +26,7 @@ script:
       then
       npm install \"@google-cloud/storage\"
       node -e \"
-      var config = { projectId: 'deft-condition-224715', keyFilename: 'keyfile.json' };
+      var config = { projectId: 'deft-condition-224715', keyFilename: 'GCS keyfile.json' };
       var storageModule = require('@google-cloud/storage');
       var storage = new storageModule.Storage(config);
       storage.bucket('node-doxygen_coverage_reports').upload('coverage\\lcov.info',
@@ -45,7 +45,7 @@ jobs:
         - >-
           "npm install \"@google-cloud/storage\"
           node -e \"
-          var config = { projectId: 'deft-condition-224715', keyFilename: 'keyfile.json' };
+          var config = { projectId: 'deft-condition-224715', keyFilename: 'GCS keyfile.json' };
           var storageModule = require('@google-cloud/storage');
           var storage = new storageModule.Storage(config);
           var prefix = '$TRAVIS_BUILD_NUMBER\\';
