@@ -5,14 +5,14 @@ sudo: false
 language: node_js
 os:
   - linux
-  - osx
-  - windows
+#  - osx
+#  - windows
 cache:
   npm
 node_js:
-  - "4"
-  - "6"
-  - "8"
+#  - "4"
+#  - "6"
+#  - "8"
   - "10"
 before_install:
   -  openssl aes-256-cbc -K $encrypted_13687a44e26f_key -iv $encrypted_13687a44e26f_iv -in GCS\ keyfile.json.enc -out GCS\ keyfile.json -d
@@ -22,6 +22,7 @@ script:
   - npm run test
   - npm run coverage
   - >- 
+      eval
       "if [[ \"$TRAVIS_TEST_RESULT\" == 0 ]]; 
       then
       echo \"test\"
@@ -48,6 +49,7 @@ jobs:
       node_js: 10
       script:
         - >-
+          eval
           "npm install \"@google-cloud/storage\"
           node -e \"
           var config = { projectId: 'deft-condition-224715', keyFilename: 'GCS keyfile.json' };
