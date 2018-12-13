@@ -26,14 +26,11 @@ script:
       "if [[ \"$TRAVIS_TEST_RESULT\" == 0 ]]; then
       npm install @google-cloud/storage;
       node -e \"
-      console.log('test3');
       var config = { projectId: 'deft-condition-224715', keyFilename: 'GCS keyfile.json' };
-      console.log('test4');
       var storageModule = require('@google-cloud/storage');
       var storage = new storageModule.Storage(config);
-      console.log('test5');
-      storage.bucket('node-doxygen_coverage_reports').upload('coverage\\lcov.info',
-      { destination: '$TRAVIS_BUILD_NUMBER\\lcov.$TRAVIS_JOB_NUMBER.info', gzip: true }).then( 
+      storage.bucket('node-doxygen_coverage_reports').upload('coverage/lcov.info',
+      { destination: '$TRAVIS_BUILD_NUMBER/lcov.$TRAVIS_JOB_NUMBER.info', gzip: true }).then( 
       function(){console.log('File Uploaded')},
       function (error) {console.log ('Upload failed: ' + error)});\";
       fi"
@@ -53,9 +50,9 @@ jobs:
           var config = { projectId: 'deft-condition-224715', keyFilename: 'GCS keyfile.json' };
           var storageModule = require('@google-cloud/storage');
           var storage = new storageModule.Storage(config);
-          var prefix = '$TRAVIS_BUILD_NUMBER\\';
+          var prefix = '$TRAVIS_BUILD_NUMBER/';
           var bucketName = 'node-doxygen_coverage_reports';
-          var options = {prefix: prefix, delimiter: '\\'};
+          var options = {prefix: prefix, delimiter: '/'};
           storage.bucket(bucketName).getFiles(options).then(
               function(files){
                   files.forEach(file => {
