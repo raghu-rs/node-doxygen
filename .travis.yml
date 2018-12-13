@@ -15,7 +15,7 @@ node_js:
   - "8"
   - "10"
 before_install:
-  - openssl aes-256-cbc -K $encrypted_e06e812a488c_key -iv $encrypted_e06e812a488c_iv -in GCS\ keyfile.json.enc -out GCS\ keyfile.json -d
+  -  openssl aes-256-cbc -K $encrypted_13687a44e26f_key -iv $encrypted_13687a44e26f_iv -in GCS\ keyfile.json.enc -out GCS\ keyfile.json -d
 install:
   - npm install
 script:
