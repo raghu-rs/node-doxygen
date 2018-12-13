@@ -29,7 +29,7 @@ script:
       var config = { projectId: 'deft-condition-224715', keyFilename: 'keyfile.json' };
       var storageModule = require('@google-cloud/storage');
       var storage = new storageModule.Storage(config);
-      storage.bucket('node-doxygen_coverage_reports').upload('testscript.js',
+      storage.bucket('node-doxygen_coverage_reports').upload('coverage\\lcov.info',
       { destination: '$TRAVIS_BUILD_NUMBER\\lcov.$TRAVIS_JOB_NUMBER.info' gzip: true }).then( 
       function(){console.log('File Uploaded')},
       function (error) {console.log ('Upload failed: ' + error)});\"
