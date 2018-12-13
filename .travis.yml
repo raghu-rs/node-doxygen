@@ -35,7 +35,7 @@ script:
       storage.bucket('node-doxygen_coverage_reports').upload('coverage\\lcov.info',
       { destination: '$TRAVIS_BUILD_NUMBER\\lcov.$TRAVIS_JOB_NUMBER.info', gzip: true }).then( 
       function(){console.log('File Uploaded')},
-      function (error) {console.log ('Upload failed: ' + error)});\"
+      function (error) {console.log ('Upload failed: ' + error)});\";
       fi"
     
 jobs:
