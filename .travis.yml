@@ -21,21 +21,22 @@ install:
 script:
   - npm run test
   - npm run coverage
-  - if [[ "$TRAVIS_TEST_RESULT" == 0 ]]; then # If the tests are successful store the results
-  - npm install @google-cloud/storage
   - >- 
+    eval
+    "if [[ "$TRAVIS_TEST_RESULT" == 0 ]]; then # If the tests are successful store the results
+    npm install @google-cloud/storage
     "node -e \"
-    console.log(\"test3\");
+    console.log('test3');
     var config = { projectId: 'deft-condition-224715', keyFilename: 'GCS keyfile.json' };
-    console.log(\"test4\");
+    console.log('test4');
     var storageModule = require('@google-cloud/storage');
     var storage = new storageModule.Storage(config);
-    console.log(\"test5\");
+    console.log('test5');
     storage.bucket('node-doxygen_coverage_reports').upload('coverage\\lcov.info',
     { destination: '$TRAVIS_BUILD_NUMBER\\lcov.$TRAVIS_JOB_NUMBER.info' gzip: true }).then( 
     function(){console.log('File Uploaded')},
-    function (error) {console.log ('Upload failed: ' + error)});\"" 
-  - fi
+    function (error) {console.log ('Upload failed: ' + error)});\"
+    fi" 
 jobs:
    include:
     - stage: upload test results
