@@ -25,7 +25,12 @@ script:
       eval
       "if [[ \"$TRAVIS_TEST_RESULT\" == 0 ]]; then # If the tests are successful store the results
       npm install @google-cloud/storage;
-      node -e \"
+      echo \"installed\";
+      fi"
+  - npm install @google-cloud/storage
+  - >- 
+      eval
+      "node -e \"
       console.log('test3');
       var config = { projectId: 'deft-condition-224715', keyFilename: 'GCS keyfile.json' };
       console.log('test4');
@@ -35,8 +40,8 @@ script:
       storage.bucket('node-doxygen_coverage_reports').upload('coverage\\lcov.info',
       { destination: '$TRAVIS_BUILD_NUMBER\\lcov.$TRAVIS_JOB_NUMBER.info' gzip: true }).then( 
       function(){console.log('File Uploaded')},
-      function (error) {console.log ('Upload failed: ' + error)});\";
-      fi" 
+      function (error) {console.log ('Upload failed: ' + error)});\";"
+    
 jobs:
    include:
     - stage: upload test results
