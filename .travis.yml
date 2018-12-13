@@ -22,16 +22,11 @@ script:
   - npm run test
   - npm run coverage
   - echo "findMe"
-  - >- 
-      eval
-      "if [[ \"$TRAVIS_TEST_RESULT\" == 0 ]]; then # If the tests are successful store the results
+  - >-  
+      eval # If the tests are successful store the results
+      "if [[ \"$TRAVIS_TEST_RESULT\" == 0 ]]; then
       npm install @google-cloud/storage;
-      echo \"installed\";
-      fi"
-  - npm install @google-cloud/storage
-  - >- 
-      eval
-      "node -e \"
+      node -e \"
       console.log('test3');
       var config = { projectId: 'deft-condition-224715', keyFilename: 'GCS keyfile.json' };
       console.log('test4');
@@ -39,9 +34,10 @@ script:
       var storage = new storageModule.Storage(config);
       console.log('test5');
       storage.bucket('node-doxygen_coverage_reports').upload('coverage\\lcov.info',
-      { destination: '$TRAVIS_BUILD_NUMBER\\lcov.$TRAVIS_JOB_NUMBER.info' gzip: true }).then( 
+      { destination: '$TRAVIS_BUILD_NUMBER\\lcov.$TRAVIS_JOB_NUMBER.info', gzip: true }).then( 
       function(){console.log('File Uploaded')},
-      function (error) {console.log ('Upload failed: ' + error)});\""
+      function (error) {console.log ('Upload failed: ' + error)});\"
+      fi"
     
 jobs:
    include:
