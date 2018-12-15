@@ -96,7 +96,7 @@ jobs:
         - >- 
           var = 0;
           for fileName in coverageResults/*.info; do
-              var=$((var + 1))
+              var=$((var + 1));
               ./cc-test-reporter format-coverage -t lcov -o codeclimate.$var.json $fileName;
           done # for each codecoverage report, format it
         - ./cc-test-reporter sum-coverage codeclimate.*.json         # Sum all coverage parts into coverage/codeclimate.json
