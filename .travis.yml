@@ -60,7 +60,7 @@ jobs:
                       var filesDownloaded = 0;
                       var filesFailed = 0;
                       files[0].forEach(file => {
-                          var fileName = coverageResults + '/' + file.name.substring(prefix.length);
+                          var fileName = 'coverageResults/' + file.name.substring(prefix.length);
                           var options = { destination: fileName };
                           var checkEnd = function () {
                               if (filesFailed > 0 && filesFailed + filesDownloaded == files.length){
