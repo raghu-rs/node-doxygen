@@ -38,6 +38,7 @@ jobs:
    include:
     - stage: upload test results
       before_install:
+        - openssl aes-256-cbc -K $encrypted_13687a44e26f_key -iv $encrypted_13687a44e26f_iv -in GCS\ keyfile.json.enc -out GCS\ keyfile.json -d
         - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
         - chmod +x ./cc-test-reporter
       node_js: 10
