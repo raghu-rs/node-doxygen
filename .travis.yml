@@ -93,8 +93,10 @@ jobs:
               console.log('Download failed: ' + error);
           })
           \""
+        - ls
+        - ls node_doxygen
         - >- 
-          var = 0;
+          var=0;
           for fileName in coverageResults/*.info; do
               var=$((var + 1));
               ./cc-test-reporter format-coverage -t lcov -o codeclimate.$var.json $fileName;
