@@ -7,7 +7,7 @@
     "url": "https://github.com/EruantalonJS/node-doxygen/issues"
   },
   "engines": {
-    "node": ">=4.0.0"
+    "node": ">=6.0.0"
   },
   "dependencies": {
     "decompress": "~4.0.0",
