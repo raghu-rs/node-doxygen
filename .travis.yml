@@ -5,13 +5,13 @@ sudo: false
 language: node_js
 os:
   - linux
-#  - osx
-#  - windows
+  - osx
+  - windows
 cache:
   npm
 node_js:
-#  - "4"
-#  - "6"
+  - "4"
+  - "6"
   - "8"
   - "10"
 before_install:
@@ -54,7 +54,7 @@ jobs:
           var bucketName = 'node-doxygen_coverage_reports';
           var options = {prefix: prefix, delimiter: '/'};
           storage.bucket(bucketName).getFiles(options).then(
-              function(files){
+              async function(files){
                   files.forEach(file => {
                       var fileName = file.name.substring(prefix.length);
                       var options = {destination: fileName};
