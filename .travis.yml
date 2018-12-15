@@ -93,6 +93,8 @@ jobs:
               console.log('Download failed: ' + error);
           })
           \""
+        - ls coverageResults
+        - ls
         - >- 
           for fn in 'ls coverageResults'; do
               ./cc-test-reporter format-coverage -t lcov -o codeclimate.$fn.json $fn
