@@ -94,7 +94,7 @@ jobs:
           })
           \""
         - ls
-        - ls node_doxygen
+        - pwd
         - >- 
           var=0;
           for fileName in coverageResults/*.info; do
