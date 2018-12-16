@@ -23,8 +23,8 @@ script:
   - >-  
       eval
       "if [[ \"$TRAVIS_TEST_RESULT\" == 0 ]]; then
-      sed -i -e 's/Users/home/g' coverage/lcov.info
-      sed -i -e 's/users/home/g' coverage/lcov.info
+      sed -i -e 's/Users/home/g' coverage/lcov.info;
+      sed -i -e 's/users/home/g' coverage/lcov.info;
       npm install @google-cloud/storage;
       node -e \"
       var config = { projectId: 'deft-condition-224715', keyFilename: 'GCS keyfile.json' };
